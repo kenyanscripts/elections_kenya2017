@@ -5,6 +5,8 @@ import urllib.request as ur
 import urllib.parse as par
 import csv
 
+# 
+
 county_name = ['Mombasa']
 county_name.append("Kwale")
 county_name.append("Kilifi")
