@@ -64,14 +64,10 @@ with open("c:\\temp\\iebc\\pres_" + nowfile, 'w', newline='') as csvfile: # Chan
     resultwriter = csv.writer(csvfile, dialect='excel')
     resultwriter.writerow(["CountyCode","CountyName", "CandidateName","Position",  "Party",	"TotalVotes", "Percentage",
                            "Disputed", "Valid", "Rejected","Objected","Registered", "TimeStamp"])
-
-   # print ("CountyCode|CountyName|CandidateName|Position|Party|TotalVotes|Percentage|"
-   #        "str(disputed)| str(valid) | str(rejected) | str(objected)| str(registered)|TimeStamp")
     for x in range(1,50):
         county = str(x).zfill(2) 
         print ("Processing " + county + " - " + county_name[x-1])
         url_base = "https://public.rts.iebc.or.ke/jsons/round1/results/Kenya_Elections_Presidential/1/10"
-##        url_base = "https://public.rts.iebc.or.ke/jsons/round1/results/Kenya_Elections_Governor/1/10" # Use this link for governor votes per county
         url_suffix = "/info.json"
         url = url_base + str(county) + url_suffix
        # print (url)
@@ -90,7 +86,7 @@ with open("c:\\temp\\iebc\\pres_" + nowfile, 'w', newline='') as csvfile: # Chan
         rejected = data['results']['null']
         objected = data['results']['census']
         registered = data['results']['participation'][0]['value']
-        #registered = 0
+       
         for i in parties:
             candidate_name = i['name']
             candidate_pos = i['ord']
@@ -99,9 +95,5 @@ with open("c:\\temp\\iebc\\pres_" + nowfile, 'w', newline='') as csvfile: # Chan
             party = i['acronym']
                         
             resultwriter.writerow([str(county),county_name[x-1],candidate_name,candidate_pos, party, cand_votes, cand_perc,
-                                   disputed, valid , rejected , objected, registered, dtime ])
-            # print (str(county) + dlim + county_name[x-1] + dlim + candidate_name + dlim + str(candidate_pos) + dlim + party + dlim
-            #       + str(cand_votes) + dlim+ str(cand_perc) + dlim 
-            #       + str(disputed) + dlim + str(valid) + dlim + str(rejected) + dlim + str(objected) +dlim + str(registered) + dlim + dtime)
-            
+                                   disputed, valid , rejected , objected, registered, dtime ])            
     
