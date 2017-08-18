@@ -1,4 +1,10 @@
 
+# This script downloads the results for presidential candidates from each of the participation polling station
+# Place polling station list in the same folder as the script. Script loops through each station and picks
+# voter statistics (valid, rejecter, etc), position and name of the contestants and timestamp. 
+# Timestamp is in GMT. I haven't converted to EAT
+# The results are extracted to a csv file in the directory defined
+
 import datetime
 import json
 import urllib.request as ur
