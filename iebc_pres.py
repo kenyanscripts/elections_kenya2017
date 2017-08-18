@@ -1,4 +1,6 @@
 
+# Extracts presidential results from the county level
+
 import datetime
 import json
 import urllib.request as ur
