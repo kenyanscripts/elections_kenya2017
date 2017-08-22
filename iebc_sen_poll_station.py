@@ -37,32 +37,43 @@ with open("iebc/sen_pollst_" + nowfile, 'w', newline='') as csvfile: # Give opti
             url = url_base + st_cd_url + url_suffix
 #            print (url)
             dlim = "|"
-            html = ur.urlopen(url).read()
-            try:
-                data = json.loads(html.decode('utf-8'))
-            except ValueError:
-                print ("Error: " + str(st_cd)   + " - " + st_name)
-                continue
-            tstamp = data['timestamp']
-            dtime = ""
-            if(len(str(tstamp))==13):
-                dtime = datetime.datetime.fromtimestamp(
-                    int(str(tstamp)[:-3])
-                ).strftime('%Y-%m-%d %H:%M:%S')
-            
-            parties = data['results']['parties']
-            disputed = data['results']['abstention']
-            valid = data['results']['blank']
-            rejected = data['results']['null']
-            objected = data['results']['census']
-            registered = data['results']['participation'][0]['value']
-            
-            for i in parties:
-                candidate_name = i['name']
-                candidate_pos = i['ord']
-                cand_votes = i['votes']['presential']
-                cand_perc = i['votes']['percent']
-                party = i['acronym']
-                resultwriter.writerow([str(county), county_name, "'" + str(st_cd),st_name,candidate_name, candidate_pos, party, cand_votes, cand_perc, 
-				disputed, valid , rejected , objected, registered, dtime ])
-                #print (str(county) + dlim + county_name[x-1] + dlim + candidate_name + dlim + str(cand_votes) + dlim  + str(cand_perc) + dlim + dtime )
+            remaining_download_tries = 5
+            while remaining_download_tries > 0 :
+                try:
+                    html = ur.urlopen(url).read()
+                except urllib.error.URLError as url_ex:
+                    print ("Error downloading " + url +" on trial no: " + str(6 - remaining_download_tries))
+                    remaining_download_tries = remaining_download_tries - 1
+                    
+                else:
+                    
+                    try:
+                        data = json.loads(html.decode('utf-8'))
+                    except ValueError:
+                        print ("Error reading json " + url)
+                        break
+                    else:
+                        tstamp = data['timestamp']
+                        dtime = ""
+                        if(len(str(tstamp))==13):
+                            dtime = datetime.datetime.fromtimestamp(
+                                int(str(tstamp)[:-3])
+                            ).strftime('%Y-%m-%d %H:%M:%S')
+                        
+                        parties = data['results']['parties']
+                        disputed = data['results']['abstention']
+                        valid = data['results']['blank']
+                        rejected = data['results']['null']
+                        objected = data['results']['census']
+                        registered = data['results']['participation'][0]['value']
+                                    
+                        for i in parties:
+                            candidate_name = i['name']
+                            candidate_pos = i['ord']
+                            cand_votes = i['votes']['presential']
+                            cand_perc = i['votes']['percent']
+                            party = i['acronym']
+                            resultwriter.writerow([str(county), county_name, "'" + str(st_cd),st_name,candidate_name, candidate_pos, party, cand_votes, cand_perc, 
+                                            disputed, valid , rejected , objected, registered, dtime ])
+                            #print (str(county) + dlim + county_name[x-1] + dlim + candidate_name + dlim + str(cand_votes) + dlim  + str(cand_perc) + dlim + dtime )
+                    break
