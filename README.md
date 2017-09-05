@@ -6,12 +6,12 @@ The scripts require python3 to run. The directory setup is for unix platforms. T
 
 eg, in unix, 
 ```py
->>> with open("iebc/mca_pollst_" + nowfile, 'w', newline='') as csvfile:
+with open("iebc/mca_pollst_" + nowfile, 'w', newline='') as csvfile:
 ```
 
 needs to be changed to 
 ```py
->>> with open("windows\directory\mca_pollst_" + nowfile, 'w', newline='') as csvfile:
+with open("windows\directory\mca_pollst_" + nowfile, 'w', newline='') as csvfile:
 ```
 
 The PollingStationCodes.csv file just contains the listing of all 40,883 gazetted polling stations 
