@@ -61,7 +61,7 @@ county_name.append("Prisons")
 
 nowfile=(datetime.datetime.now().strftime("%Y%m%d_%H%M%S")) + ".csv"
 
-with open("c:\\temp\\iebc\\pres_" + nowfile, 'w', newline='') as csvfile: # Change as appropriate to directory in which to create csv
+with open("iebc/pres_" + nowfile, 'w', newline='') as csvfile: # Change as appropriate to directory in which to create csv
 
     resultwriter = csv.writer(csvfile, dialect='excel')
     resultwriter.writerow(["CountyCode","CountyName", "CandidateName","Position",  "Party",	"TotalVotes", "Percentage",
