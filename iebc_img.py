@@ -1,6 +1,7 @@
-# This script downloads the images of the Form 34A for the presidential election from each of the participation polling station
+# This script downloads the images of the Form 34A for the presidential election from each of the participating polling station
 # Place polling station list in the same folder as the script. Script loops through each station
 # The images are downloaded to the defined directory
+# Make sure the ./iebc/images folder exists before running the script
 
 import requests
 import csv
